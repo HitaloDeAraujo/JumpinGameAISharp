@@ -4,11 +4,9 @@ namespace JumpinGameAISharp
 {
     public class Bar : World
     {
-        Random random = new Random();
-
         public Bar(double pos)
         {
-            this.top = random.Next((int)(height / 6), (int)((2 / 3) * height));
+            this.top = new Random().Next((int)(height / 6), (int)((2 / 3) * height));
             this.x = width + pos;
             this.w = 80;
             this.speed = 8;
