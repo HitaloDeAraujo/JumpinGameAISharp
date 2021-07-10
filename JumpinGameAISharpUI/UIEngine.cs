@@ -28,11 +28,6 @@ namespace JumpinGameAISharpUI
                 for (int j = 0; j < c; j++)
                     matrix[i, j] = " ";
 
-            int barH = 10;
-            int barW = 6;
-
-            int pointX = c - barW;
-
             for (int i = 0; i < c; i++)
             {
                 int size = random.Next(0, 2);
@@ -41,19 +36,15 @@ namespace JumpinGameAISharpUI
 
             writeMatrix();
 
-            for (int i = pointX; i < pointX + barW; i++)
-                for (int j = l - 2; j > barH; j--)
-                    matrix[j, i - 1] = "(";
+            insertBar(l, c);
 
-            string[,] cloud = getCloud();
-            for (int i = 0; i < 6; i++)
-                for (int j = 0; j < 30; j++)
-                    matrix[i, j + 79] = cloud[i, j];
+            insertCloud();
 
             writeMatrix();
 
             int ticks = 0;
-            bool incluiuNuvem = false;
+            int lastTickCloud = 0;
+            int nextBar = 20;
 
             while (!matrixToString().Replace(",", "").Replace(".", "").Trim().Equals(""))
             {
@@ -64,16 +55,37 @@ namespace JumpinGameAISharpUI
 
                 ticks++;
 
-                if (ticks > 10 && !incluiuNuvem && !matrixToString().Contains("~"))
-                {
-                    cloud = getCloud();
-                    for (int i = 0; i < 6; i++)
-                        for (int j = 0; j < 30; j++)
-                            matrix[i, j + 80] = cloud[i, j];
+                if (ticks - lastTickCloud == nextBar && !matrixToString().Contains("~"))
+                    insertCloud();
 
-                    incluiuNuvem = true;
+                if (ticks - lastTickCloud == nextBar)
+                {
+                    insertBar(l, c);
+                    lastTickCloud = ticks;
+
+                    nextBar = new Random().Next(25, 60);
                 }
             }
+        }
+
+        private static void insertCloud()
+        {
+            string[,] cloud = getCloud();
+            for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 30; j++)
+                    matrix[i, j + 79] = cloud[i, j];
+        }
+
+        private static void insertBar(int l, int c)
+        {
+            int barH = new Random().Next(5, 15);
+            int barW = 6;
+
+            int pointX = c - barW;
+
+            for (int i = pointX; i < pointX + barW; i++)
+                for (int j = l - 2; j > barH; j--)
+                    matrix[j, i - 1] = "(";
         }
 
         private static void setCloud()
