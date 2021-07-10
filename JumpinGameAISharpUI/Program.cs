@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace JumpinGameAISharpUI
+﻿namespace JumpinGameAISharpUI
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            UIEngine.GameLoop();
         }
     }
 }
