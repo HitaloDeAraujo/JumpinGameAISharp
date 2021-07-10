@@ -14,6 +14,9 @@ namespace JumpinGameAISharpUI
         private static ConsoleColor defaultBackgroundColor = Console.BackgroundColor;
         private static ConsoleColor defaultForegroundColor = Console.ForegroundColor;
 
+        /// <summary>
+        /// Start Game Loop
+        /// </summary>
         public static void GameLoop()
         {
             Console.BackgroundColor = ConsoleColor.Blue;
